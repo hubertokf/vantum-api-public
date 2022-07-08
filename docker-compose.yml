@@ -1,0 +1,22 @@
+version: "3"
+services:
+  api:
+    container_name: vantum-api
+    restart: always
+    build: .
+    environment:
+      - NODE_ENV=development
+    ports:
+      - "1337:1337"
+    # links:
+      # - mongo
+
+  # mongo:
+  #   container_name: mongo
+  #   image: mongo
+  #   environment:
+  #     - MONGO_INITDB_DATABASE=vantum
+  #   volumes:
+  #     - ./data:/data/db
+  #   ports:
+  #     - "27017:27017"

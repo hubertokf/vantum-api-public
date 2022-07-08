@@ -1,0 +1,58 @@
+{
+  "name": "api-2",
+  "private": true,
+  "version": "0.0.0",
+  "description": "a Sails application",
+  "keywords": [],
+  "dependencies": {
+    "@google-cloud/compute": "^1.1.5",
+    "@google-cloud/storage": "^3.1.0",
+    "@sailshq/connect-redis": "^3.2.1",
+    "@sailshq/lodash": "^3.10.3",
+    "@sailshq/socket.io-redis": "^5.2.0",
+    "assert": "^2.0.0",
+    "bcrypt-nodejs": "0.0.3",
+    "bluebird": "^3.5.5",
+    "connect-mongo": "^3.0.0",
+    "connect-redis": "^4.0.2",
+    "eslint-config-airbnb": "^18.0.1",
+    "grunt": "1.0.4",
+    "jsonwebtoken": "^8.5.1",
+    "passport": "^0.4.0",
+    "passport-facebook": "^3.0.0",
+    "passport-local": "^1.0.0",
+    "sails": "^1.2.3",
+    "sails-hook-grunt": "^4.0.0",
+    "sails-hook-organics": "^1.0.0",
+    "sails-hook-orm": "^2.1.1",
+    "sails-hook-orm-mongoose": "github:cyborch/sails-hook-orm-mongoose",
+    "sails-hook-requestlogger": "^1.0.0",
+    "sails-hook-sockets": "^2.0.0",
+    "sails-mongo": "^1.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^6.1.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.3.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-prettier": "^3.1.0",
+    "prettier": "^1.18.2"
+  },
+  "scripts": {
+    "dev": "export NODE_ENV=development && nodemon --ignore 'tmp/*' app.js && exit 0",
+    "start": "NODE_ENV=production node app.js",
+    "test": "npm run lint && npm run custom-tests && echo 'Done.'",
+    "lint": "./node_modules/eslint/bin/eslint.js . --max-warnings=0 --report-unused-disable-directives && echo '✔  Your .js files look good.'",
+    "custom-tests": "echo \"(No other custom tests yet.)\" && echo"
+  },
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/huberto/api-2.git"
+  },
+  "author": "huberto",
+  "license": "",
+  "engines": {
+    "node": "^10.16"
+  }
+}

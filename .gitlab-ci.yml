@@ -1,0 +1,88 @@
+variables:
+  WORK_DIR: ${CI_PROJECT_NAME}
+  BRANCH: ${CI_COMMIT_REF_NAME}
+  REGISTRY: registry.gitlab.com/vantum/api
+
+  # DOCKER_DRIVER: overlay
+
+services:
+  - docker:dind
+
+stages:
+  - build
+  # - test
+  - deploy
+
+# build_project:
+#   image: docker:latest
+#   services:
+#     - docker:dind
+#   stage: build
+#   script:
+#     - docker login -u vantumtech -p Vbnvcfa55 registry.gitlab.com
+#     - docker build -t $REGISTRY .
+#     - docker push $REGISTRY
+cache:
+  paths:
+    - node_modules/
+
+build:
+  stage: build
+  services:
+    - docker:dind
+  script:
+    - docker login -u vantumtech -p $REGISTER_PASS registry.gitlab.com
+    - docker build -t $REGISTRY .
+    - docker push $REGISTRY
+  artifacts:
+    paths:
+      - node_modules/
+  tags:
+    - shell-runner
+
+# test_project:
+#     image: docker:latest
+#     services:
+#       - docker:dind
+#     stage: test
+#     script:
+#         - docker login -u johandurancerdas -p $PASS registry.gitlab.com
+#         - docker pull $REGISTRY
+#         - docker run --name=$BRANCH -p 80:8080 -i $REGISTRY npm run ci
+
+staging:
+  stage: deploy
+  environment: staging
+  services:
+    - docker:dind
+  only:
+    - master
+  script:
+    - docker login -u vantumtech -p $REGISTER_PASS registry.gitlab.com
+    - docker pull $REGISTRY
+    - docker stop $(docker ps -a -q) || true && docker rm $(docker ps -a -q) || true
+    - docker run --name=$BRANCH -p 1337:1337 -e NODE_ENV=staging -e MONGODB_URI=$MONGODB_URI -dit $REGISTRY npm start
+  artifacts:
+    paths:
+      - node_modules/
+  tags:
+    - shell-runner
+
+deploy:
+  stage: deploy
+  environment: production
+  services:
+    - docker:dind
+  when: manual
+  only:
+    - master
+  script:
+    - docker login -u vantumtech -p $REGISTER_PASS registry.gitlab.com
+    - docker pull $REGISTRY
+    - docker stop $(docker ps -a -q) || true && docker rm $(docker ps -a -q) || true
+    - docker run --name=$BRANCH -p 1337:1337 -e NODE_ENV=production -e MONGODB_URI=$MONGODB_URI -dit $REGISTRY npm start
+  artifacts:
+    paths:
+      - node_modules/
+  tags:
+    - shell-runner

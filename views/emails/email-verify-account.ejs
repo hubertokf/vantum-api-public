@@ -1,0 +1,26 @@
+<% /* Note: This is injected into `views/layouts/layout-email.ejs` */ %>
+<p style="margin-bottom: 25px;">Bem vindo, <%= fullName %>!</p>
+<p style="margin-bottom: 25px;">
+  Você está quase pronto para começar. Basta clicar no botão abaixo para
+  confirmar o endereço de e-mail da sua conta:
+</p>
+<div style="margin-bottom: 25px; text-align: center;">
+  <a
+    style="background-color: #00ce46; display: inline-block; font-size: 1.1em; color: #fff; padding: 10px 35px 10px; font-weight: 500; text-decoration: none; border-radius: 7px;"
+    href="<%= 'https://app.vantum.com.br/emailconfirmation'+'?token='+encodeURIComponent(token) %>"
+    >Confirmar email</a
+  >
+</div>
+<p style="margin-bottom: 25px;">
+  Se você tiver algum problema, tente colar este link no seu navegador:
+  <a
+    style="color: #00ce46; word-wrap: break-word;"
+    href="<%= 'https://app.vantum.com.br/emailconfirmation'+'?token='+encodeURIComponent(token) %>"
+  >
+    <%=
+    'https://app.vantum.com.br/emailconfirmation'+'?token='+encodeURIComponent(token)
+    %></a
+  >
+</p>
+<p style="margin-bottom: 5px;">Atenciosamente,</p>
+<p style="margin-top: 0px;">A Vantum</p>
